@@ -1,5 +1,5 @@
 # Metodo "Lazy"
-## Metodo dei fasori per risolvere equazioni differenziali lineari con forzante trigonometrica
+**Metodo dei fasori per risolvere equazioni differenziali lineari con forzante trigonometrica.**
 
 A cura di [Joele A. Ortore](https://github.com/AlastorCoder23)
 
