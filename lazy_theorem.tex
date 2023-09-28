@@ -1,0 +1,212 @@
+\documentclass[11pt,italian]{article}
+\usepackage[dvipsnames]{xcolor} % more colors
+\usepackage{pgf,tikz} % plotting
+\usepackage{mathtools} % mathclap
+
+\usepackage{todonotes} % notes on things to-do
+\usepackage{fontspec} % better font selection
+\usepackage[T1]{fontenc} % utf-8 text
+\usepackage{lmodern} % fixes font
+\usepackage{foreign} % foreign words typeset
+\usepackage{textgreek} % greek letters in text mode
+\usepackage{makecell} % in-cell newline support
+\usepackage{amssymb} % math symbols in text mode
+\usepackage{amsthm} % proofs and more
+\usepackage{gensymb} % generic symbols
+\usepackage[italian]{babel} % italian
+\usepackage{ragged2e} % more consistency with ragged
+\usepackage{fancyhdr} % headers
+\usepackage[a4paper, total={6in, 10in}]{geometry} % paper type
+\usepackage{marginnote} % margin notes
+\usepackage{mparhack}
+\usepackage{etoolbox} % more macros
+\usepackage{bm} % bold math symbols
+\usetikzlibrary{positioning,shapes,fit,calc}
+\usepackage{pgfplots}
+\usepackage{xfrac}
+\usepackage{tabularx} % better tables
+\setlength{\parindent}{0pt} % do not indent new paragraphs
+\renewcommand{\epsilon}{\varepsilon} % prettier epsilon
+\renewcommand{\phi}{\varphi} % prettier phi
+\renewcommand\tabularxcolumn[1]{m{#1}} % for vertical centering text in X column; copied & pasted from https://tex.stackexchange.com/questions/343028/vertical-centering-of-all-columns-in-tabularx-environment/343329
+\newcolumntype{Y}{>{\centering\arraybackslash}X} % Y column type for tabularx: like X, but centers
+\usepackage{adjustbox} % environment that centers overflowing contnent
+\usepackage[d]{esvect}
+\usepackage{fancyvrb}
+\renewcommand{\vec}{\vv}
+\usepackage{upquote} % makes quotes & backticks work in Verbatim env
+\usepackage{mathtools}% Loads amsmath
+\usepackage{mdframed}
+
+\theoremstyle{remark}
+\newtheorem*{mdproposition}{Osservazione}
+\newenvironment{remark}%
+	{\begin{mdframed}[backgroundcolor=White]\begin{mdproposition}}%
+	{\end{mdproposition}\end{mdframed}}
+
+\title{Metodo "Lazy"\\ \large Metodo dei Fasori per Risolvere Equazioni Differenziali Lineari con Forzante Trigonometrica}
+\author{Joele Andrea Ortore}
+\date{2023-09-28}
+
+\begin{document}
+\maketitle
+
+Data un'equazione differenziale lineare di ordine \(n\) con \(a_0, a_1, ..., a_n\) coefficienti reali costanti, sia la forzante \(F(t)\) una funzione trigonometrica del tipo \(\cos (\omega t)\), \(\sin (\omega t)\), o una combinazione lineare delle due:
+
+\begin{equation}
+    \sum_{i=0}^{n} a_i \cdot y^{(i)}(t) = F(t) = k_1 \cdot \cos (\omega t) + k_2 \cdot \sin (\omega t) \mbox{ con } k_1, k_2 \in \mathbb{R}
+\end{equation}
+
+è possibile individuare una soluzione particolare \(y_p\) portando l'equazione nel dominio fasoriale:
+
+\begin{equation}
+    \overline{y} \cdot \sum_{i=0}^{n} (j \omega)^i \cdot a_i = \overline{F}
+\end{equation}
+
+e risolvendola per \(\overline{y}\), ottenendo una soluzione del tipo:
+
+\begin{equation*}
+    \overline{y} = c_1 - j c_2
+\end{equation*}
+
+riportando la soluzione nel dominio del tempo, ottengo:
+
+\begin{equation*}
+    y_p(t) = c_1 \cdot \cos (\omega t) + c_2 \cdot \sin (\omega t)
+\end{equation*}
+
+che è una soluzione particolare dell'equazione.
+
+Posso infatti scrivere la (2) come:
+
+\begin{equation*}
+    \underbrace{\overbrace{\Re\left\{\sum_{i=0}^n (j \omega)^i a_i \overline{y}\right\}}^{\alpha} + j \overbrace{\Im\left\{\sum_{i=0}^n (j \omega)^i a_i \overline{y}\right\}}^{\beta}}_{\mbox{chiameremo questa porzione } \gamma} = \Re\left\{\overline{F}\right\} + j \Im\left\{\overline{F}\right\}                                                                                                                                   \\
+\end{equation*}
+
+
+da cui:
+
+\begin{align*}
+    \overline{y} & = \frac{(\alpha - j \beta ) \left[ \Re \{\overline{F}\} + j \Im \{\overline{F}\} \right]}{|\gamma|^2}                                                                                                 \\
+    \overline{y} & = \underbrace{\frac{\alpha \Re \{\overline{F}\} + \beta \Im \{\overline{F}\} }{|\gamma|^2}}_{c_1} - j \underbrace{\frac{\beta \Re \{\overline{F}\} - \alpha \Im \{\overline{F}\} }{|\gamma|^2}}_{c_2} \\
+    \overline{y} & = c_1 - j c_2                                                                                                                                                                                         \\
+\end{align*}
+
+\newpage
+
+\begin{proof}
+    Vogliamo dimostrare che data un'equazione scritta come:
+    \[
+        \sum_{i=0}^{n} a_i \cdot y^{(i)}(t) = F(t)
+    \]
+
+    se portata nel dominio dei fasori, risolta per $\overline{y}$ e riportata tale soluzione nel dominio del tempo, si ottiene una soluzione particolare dell'equazione di partenza; procederemo quindi a ritroso dal prototipo di soluzione fornito dal Metodo di Somiglianza e ci aspetteremo dunque di trovare un risultato del tipo:
+
+    \begin{equation}
+        \sum_{i=0}^n (j \omega)^i\, \overline{y} = x_1 + j x_2
+    \end{equation}
+
+    \vspace{1em}
+
+    Innanzitutto, la forma generale del prototipo di soluzione particolare è:
+
+    \[
+        y_p(t) = c_1 \cos (\omega t) + c_2 \sin (\omega t)
+    \]
+
+    In accordo con il Metodo di Somiglianza, la generalizzazione della forma della soluzione è:
+
+    \begin{equation}
+        c_1 \sum_{i=0} ^ n \left\{ \omega^i \underbrace{\cos \left[ \omega t + i \left( \frac{\pi}{2} \right) \right]}_{a} \right\} + c_2 \sum_{i=0} ^ n \left\{ \omega^i \underbrace{\sin \left[ \omega t + i \left( \frac{\pi}{2} \right) \right]}_{b} \right\} = y(t)
+    \end{equation}
+
+    con \(c_1, c_2\) noti, \(n\) pari al massimo ordine di derivazione presente nell'equazione differenziale.
+
+
+    \begin{remark}
+        Possiamo notare che i valori di \(a\) e \(b\) si ripetono ogni volta che \(i\) arriva a un multiplo di \(4\):
+
+        \begin{align*}
+            i = 0  & \implies a = \cos (\omega t + 0) = \cos (\omega t)    \\
+            i = 1  & \implies a = \cos (\omega t + \frac{\pi}{2})          \\
+            i = 2  & \implies a = \cos (\omega t + \pi)                    \\
+            i = 3  & \implies a = \cos (\omega t + \frac{3\pi}{2})         \\
+            i = 4  & \implies a = \cos (\omega t + 2\pi) = \cos (\omega t) \\
+            \vdots & \quad \vdots
+        \end{align*}
+
+        Questo porta a un parallelismo interessante con i numeri complessi, infatti:
+
+        \[ j^0 = j^4 = j^8 = \dots\]
+    \end{remark}
+
+    Portiamo quindi la (4) nel dominio dei fasori:
+
+    \begin{minipage}{0.65\textwidth}
+        \begin{equation*}
+            c_1 \sum_{i=0}^n \left\{ \omega^i e^{i\frac{\pi}{2} j} \right\} + c_2 \sum_{i=0}^n \left\{ \omega^i e^{{(i-1)}\frac{\pi}{2} j} \right\} = \overline{y}
+        \end{equation*}
+    \end{minipage}
+    \begin{minipage}{0.35\textwidth}
+
+        \begin{mdframed}[linecolor=CadetBlue]
+            \color{CadetBlue}
+            \small
+            \begin{align*}
+                                    &
+                \sin\left( \omega t + i \frac{\pi}{2} \right) =                                                     \\
+                =                   & \cos\left(\omega t + i \frac{\pi}{2} - \frac{\pi}{2}\right)                   \\
+                \mbox{In fasori:\ } & e^{\left(i \frac{\pi}{2} - \frac{\pi}{2}\right) j} = e^{(i-1)\frac{\pi}{2} j} \\
+            \end{align*}
+        \end{mdframed}
+    \end{minipage}
+
+
+    che può essere riscritto come:
+
+    \begin{align*}
+        c_1 \sum_{i=0}^n \left\{ \omega^i j^i\right\} + c_2 \sum_{i=0}^n \left\{ \omega^i j^{i-1} \right\} & = \overline{y} \\
+        c_1 \sum_{i=0}^n \left\{ \omega j \right\}^i  - j c_2 \sum_{i=0}^n \left\{ \omega j \right\}^{i}   & = \overline{y} \\
+    \end{align*}
+
+    \[
+        \overline{y} = (c_1 - j c_2) \sum_{i=0}^n \left\{\omega j \right\}^i
+    \]
+
+    che posso riscrivere come:
+
+    \[
+        \overline{y} = (c_1 - j c_2) \left\{ \Re \left\{\sum_{i=0}^n \left[ \omega j \right]^i \right\} + j \Im \left\{ \sum_{i=0}^n \left[ \omega j \right]^i \right\} \right\}
+    \]
+
+    \vspace{1em}
+
+    \begin{align*}
+        \frac
+        {\overline{y}}
+        {\left\{ \Re \left\{\sum_{i=0}^n \left[ \omega j \right]^i \right\} + j \Im \left\{ \sum_{i=0}^n \left[ \omega j \right]^i \right\} \right\}} =
+         & c_1 - j c_2 \\
+        \\
+        \frac
+        {\overline{y} {\left\{ \Re \left\{\sum_{i=0}^n \left[ \omega j \right]^i \right\} - j \Im \left\{ \sum_{i=0}^n \left[ \omega j \right]^i \right\} \right\}}}
+        {\left|\left\{ \Re \left\{\sum_{i=0}^n \left[ \omega j \right]^i \right\} + j \Im \left\{ \sum_{i=0}^n \left[ \omega j \right]^i \right\} \right\} \right|^2} =
+         & c_1 - j c_2
+    \end{align*}
+
+    \begin{equation*}
+        \Re \left\{\sum_{i=0}^n \left[ \omega j \right]^i \overline{y} \right\} - j \Im \left\{ \sum_{i=0}^n \left[ \omega j \right]^i \overline{y} \right\} =
+        \underbrace{\left|\left\{ \Re \left\{\sum_{i=0}^n \left[ \omega j \right]^i \right\} + j \Im \left\{ \sum_{i=0}^n \left[ \omega j \right]^i \right\} \right\} \right|^2}_{\mbox{Chiameremo questa porzione }P} \cdot\, (c_1 - j c_2)
+    \end{equation*}
+
+    Faccio il complesso coniugato di entrambi i membri:
+
+    \begin{align*}
+        \Re \left\{\sum_{i=0}^n \left[ \omega j \right]^i \overline{y} \right\} + j \Im \left\{ \sum_{i=0}^n \left[ \omega j \right]^i \overline{y} \right\} & =
+        P \cdot\, (c_1 + j c_2)                                                                                                                                                        \\
+        \sum_{i=0}^n \left[ \omega j \right]^i \overline{y}                                                                                                  & = (c_1 + j c_2) \cdot P
+    \end{align*}
+
+    Risultato coerente con quanto ci aspettavamo dalla (3).
+\end{proof}
+
+\end{document}
