@@ -45,7 +45,7 @@
 	{\end{mdproposition}\end{mdframed}}
 
 \title{Metodo "Lazy"\\ \large Metodo dei Fasori per Risolvere Equazioni Differenziali Lineari con Forzante Trigonometrica}
-\author{Joele Andrea Ortore}
+\author{Joele Andrea Ortore\\ \small Impaginato in \LaTeX\ da Alessandro Modica}
 \date{2023-09-28}
 
 \begin{document}
@@ -77,10 +77,10 @@ riportando la soluzione nel dominio del tempo, ottengo:
 
 che è una soluzione particolare dell'equazione.
 
-Posso infatti scrivere la (2) come:
+Esplicitando la parte reale e la parte immaginaria, posso scrivere la (2) come:
 
 \begin{equation*}
-    \underbrace{\overbrace{\Re\left\{\sum_{i=0}^n (j \omega)^i a_i \overline{y}\right\}}^{\alpha} + j \overbrace{\Im\left\{\sum_{i=0}^n (j \omega)^i a_i \overline{y}\right\}}^{\beta}}_{\mbox{chiameremo questa porzione } \gamma} = \Re\left\{\overline{F}\right\} + j \Im\left\{\overline{F}\right\}                                                                                                                                   \\
+    \overline{y} \cdot \underbrace{ \left( \overbrace{\Re\left\{\sum_{i=0}^n (j \omega)^i a_i \right\}}^{\alpha} + j \overbrace{\Im\left\{\sum_{i=0}^n (j \omega)^i a_i \right\}}^{\beta} \right)}_{\mbox{chiameremo questa porzione } \gamma} = \Re\left\{\overline{F}\right\} + j \Im\left\{\overline{F}\right\}                                                                                                                                   \\
 \end{equation*}
 
 
@@ -103,7 +103,7 @@ da cui:
     se portata nel dominio dei fasori, risolta per $\overline{y}$ e riportata tale soluzione nel dominio del tempo, si ottiene una soluzione particolare dell'equazione di partenza; procederemo quindi a ritroso dal prototipo di soluzione fornito dal Metodo di Somiglianza e ci aspetteremo dunque di trovare un risultato del tipo:
 
     \begin{equation}
-        \sum_{i=0}^n (j \omega)^i\, \overline{y} = x_1 + j x_2
+        \sum_{i=0}^n (j \omega)^i\, \overline{y} = x_1 - j x_2
     \end{equation}
 
     \vspace{1em}
@@ -137,7 +137,7 @@ da cui:
 
         Questo porta a un parallelismo interessante con i numeri complessi, infatti:
 
-        \[ j^0 = j^4 = j^8 = \dots\]
+        \[ j^0 = j^4 = j^8 = \dots\ = j^{4n} = 1 \]
     \end{remark}
 
     Portiamo quindi la (4) nel dominio dei fasori:
@@ -161,6 +161,7 @@ da cui:
         \end{mdframed}
     \end{minipage}
 
+    \newpage
 
     che può essere riscritto come:
 
@@ -173,10 +174,10 @@ da cui:
         \overline{y} = (c_1 - j c_2) \sum_{i=0}^n \left\{\omega j \right\}^i
     \]
 
-    che posso riscrivere come:
+    che equivale a:
 
     \[
-        \overline{y} = (c_1 - j c_2) \left\{ \Re \left\{\sum_{i=0}^n \left[ \omega j \right]^i \right\} + j \Im \left\{ \sum_{i=0}^n \left[ \omega j \right]^i \right\} \right\}
+        \overline{y} = (c_1 - j c_2) \left( \Re \left\{\sum_{i=0}^n \left[ \omega j \right]^i \right\} + j \Im \left\{ \sum_{i=0}^n \left[ \omega j \right]^i \right\} \right)
     \]
 
     \vspace{1em}
@@ -184,26 +185,25 @@ da cui:
     \begin{align*}
         \frac
         {\overline{y}}
-        {\left\{ \Re \left\{\sum_{i=0}^n \left[ \omega j \right]^i \right\} + j \Im \left\{ \sum_{i=0}^n \left[ \omega j \right]^i \right\} \right\}} =
-         & c_1 - j c_2 \\
+        { \Re \left\{\sum_{i=0}^n \left[ \omega j \right]^i \right\} + j \Im \left\{ \sum_{i=0}^n \left[ \omega j \right]^i \right\} } =
+         & \ c_1 - j c_2  \\
         \\
         \frac
-        {\overline{y} {\left\{ \Re \left\{\sum_{i=0}^n \left[ \omega j \right]^i \right\} - j \Im \left\{ \sum_{i=0}^n \left[ \omega j \right]^i \right\} \right\}}}
-        {\left|\left\{ \Re \left\{\sum_{i=0}^n \left[ \omega j \right]^i \right\} + j \Im \left\{ \sum_{i=0}^n \left[ \omega j \right]^i \right\} \right\} \right|^2} =
-         & c_1 - j c_2
+        {\overline{y} \cdot {\left( \Re \left\{\sum_{i=0}^n \left[ \omega j \right]^i \right\} - j \Im \left\{ \sum_{i=0}^n \left[ \omega j \right]^i \right\} \right)}}
+        {\left| \Re \left\{\sum_{i=0}^n \left[ \omega j \right]^i \right\} + j \Im \left\{ \sum_{i=0}^n \left[ \omega j \right]^i \right\} \right|^2} =
+         & \  c_1 - j c_2
     \end{align*}
 
     \begin{equation*}
-        \Re \left\{\sum_{i=0}^n \left[ \omega j \right]^i \overline{y} \right\} - j \Im \left\{ \sum_{i=0}^n \left[ \omega j \right]^i \overline{y} \right\} =
-        \underbrace{\left|\left\{ \Re \left\{\sum_{i=0}^n \left[ \omega j \right]^i \right\} + j \Im \left\{ \sum_{i=0}^n \left[ \omega j \right]^i \right\} \right\} \right|^2}_{\mbox{Chiameremo questa porzione }P} \cdot\, (c_1 - j c_2)
+        \overline{y} \cdot \left( \Re \left\{\sum_{i=0}^n \left[ \omega j \right]^i \right\} - j \Im \left\{ \sum_{i=0}^n \left[ \omega j \right]^i \right\} \right) =
+        \underbrace{\left| \Re \left\{\sum_{i=0}^n \left[ \omega j \right]^i \right\} + j \Im \left\{ \sum_{i=0}^n \left[ \omega j \right]^i \right\} \right|^2}_{\mbox{Chiameremo questa porzione }P} \cdot\, (c_1 - j c_2)
     \end{equation*}
 
-    Faccio il complesso coniugato di entrambi i membri:
+    Quindi:
 
     \begin{align*}
-        \Re \left\{\sum_{i=0}^n \left[ \omega j \right]^i \overline{y} \right\} + j \Im \left\{ \sum_{i=0}^n \left[ \omega j \right]^i \overline{y} \right\} & =
-        P \cdot\, (c_1 + j c_2)                                                                                                                                                        \\
-        \sum_{i=0}^n \left[ \omega j \right]^i \overline{y}                                                                                                  & = (c_1 + j c_2) \cdot P
+        \overline{y} \cdot \left( \Re \left\{\sum_{i=0}^n \left[ \omega j \right]^i \right\} - j \Im \left\{ \sum_{i=0}^n \left[ \omega j \right]^i \right\} \right) & = P \cdot\, (c_1 - j c_2) \\
+        \overline{y} \sum_{i=0}^n \left[ \omega j \right]^i                                                                                                          & = (c_1 - j c_2) \cdot P
     \end{align*}
 
     Risultato coerente con quanto ci aspettavamo dalla (3).
